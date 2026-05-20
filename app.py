@@ -3,8 +3,21 @@
 from flask import Flask, render_template, request, jsonify
 import pickle
 import pandas as pd
+import os
+import sys
 
 app = Flask(__name__)
+
+# Check if artifacts exist, if not generate them
+if not os.path.exists('artifacts/movies.pkl') or not os.path.exists('artifacts/similarity.pkl'):
+    print("Artifacts not found. Generating from source data...")
+    # Import and run the recommender script to generate artifacts
+    import subprocess
+    result = subprocess.run([sys.executable, 'recommender.py'], capture_output=True, text=True)
+    if result.returncode != 0:
+        print(f"Error generating artifacts: {result.stderr}")
+        raise Exception("Failed to generate recommendation artifacts")
+    print("Artifacts generated successfully!")
 
 # Load pre-computed artifacts (instant — no reprocessing)
 movies     = pickle.load(open('artifacts/movies.pkl', 'rb'))
