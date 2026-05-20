@@ -1,0 +1,5 @@
+﻿flask
+pandas==3.0.3
+scikit-learn
+nltk
+numpy
