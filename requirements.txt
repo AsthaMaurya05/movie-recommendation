@@ -1,5 +1,5 @@
 ﻿flask
-pandas==2.2.0
+pandas==3.0.3
 scikit-learn
 nltk
 numpy
